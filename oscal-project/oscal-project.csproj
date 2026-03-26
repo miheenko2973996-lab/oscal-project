@@ -89,6 +89,7 @@
     <None Include="docs\anforderungsanalyse.md" />
     <None Include="docs\projektumfang.md" />
     <None Include="docs\research.md" />
+    <None Include="entwicklertagebuch.md" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
