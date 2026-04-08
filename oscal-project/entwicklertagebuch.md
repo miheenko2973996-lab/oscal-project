@@ -260,7 +260,7 @@ Heute habe ich mein Projekt auf GitHub veröffentlicht.
 * Repository erstellt
 * Projekt hochgeladen (Push)
 * README-Datei hinzugefügt
-
+* Test Git Push
 ---
 
 ## 📌 Fazit
