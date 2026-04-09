@@ -93,22 +93,21 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="docs\anforderungsanalyse.md" />
-    <None Include="docs\benutzerhandbuch.md" />
+    <None Include="docs\user\benutzerhandbuch.md" />
     <None Include="docs\projektumfang.md" />
     <None Include="docs\research.md" />
-    <None Include="entwicklertagebuch.md" />
+    <None Include="docs\entwicklertagebuch.md" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <None Include="Testprotokoll.md" />
+    <None Include="docs\test\Testprotokoll.md" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="docs\tests\" />
     <Folder Include="docs\uml\" />
   </ItemGroup>
   <ItemGroup>
