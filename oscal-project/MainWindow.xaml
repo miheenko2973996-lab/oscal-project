@@ -1,0 +1,264 @@
+﻿<Window x:Class="oscal_project.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:oscal_project"
+        mc:Ignorable="d"
+        WindowState="Maximized"
+        Title="OSCAL Katalog" MinHeight="700" MinWidth="1000">
+    <Grid>
+        <!--Zeilen-->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- Menü -->
+            <RowDefinition Height="Auto"/>
+            <!-- Titel -->
+            <RowDefinition Height="*"/>
+            <!-- Inhalt -->
+        </Grid.RowDefinitions>
+
+        <!-- Menü -->
+        <Menu Grid.Row="0"
+              Background="#DBDBDB"
+              Foreground="Black"
+              Padding="10,5">
+            <MenuItem Header="Datei">
+                <MenuItem Header="Öffnen" Click="OpenFile_Click"/>
+                <MenuItem Header="Speichern" Click="SaveFile_Click"/>
+                <MenuItem Header="Speichern unter" Click="SaveAs_Click"/>
+                <Separator/>
+                <MenuItem Header="Export als JSON" Click="ExportJson_Click"/>
+                <MenuItem Header="Export als XML" Click="ExportXml_Click"/>
+            </MenuItem>
+            <MenuItem Header="Bearbeiten">
+                <MenuItem Header="Suchen" Click="SearchMenu_Click"/>
+                <MenuItem Header="Löschen" Click="ClearSearch_Click"/>
+                <MenuItem Header="Kopieren" Click="Copy_Click"/>
+            </MenuItem>
+            <MenuItem Header="Hilfe">
+                <MenuItem Header="Über" Click="About_Click"/>
+            </MenuItem>
+
+            <!-- Titlebereich -->
+            <Canvas>
+                <TextBlock Text="Katalog: BSI Grundschutz      Version: 1.0" 
+                           Canvas.Left="135" 
+                           Canvas.Top="-8"/>
+            </Canvas>
+        </Menu>
+
+        <!-- Hauptbereich-->
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="254.8"/>
+                <ColumnDefinition Width="45.2"/>
+                <!-- Links -->
+                <ColumnDefinition Width="*"/>
+                <!-- Rechts -->
+            </Grid.ColumnDefinitions>
+            <!-- Linke Seite -->
+            <Border Grid.Column="0"
+                    Background="#EDEDED"
+                    BorderBrush="Black"
+                    BorderThickness="0,0,1,0"
+                    Padding="12" Grid.ColumnSpan="2">
+                
+                <Grid Margin="24,22,20,20">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Text="Catalog"
+                               Grid.Row="0"
+                               FontSize="20"
+                               FontWeight="SemiBold"
+                               Margin="0,0,0,22"/>
+
+                    <ListBox x:Name="ControlsListBox"
+                             Grid.Row="1"
+                             ScrollViewer.VerticalScrollBarVisibility="Auto"
+                             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                             HorizontalContentAlignment="Stretch"
+                             SelectionChanged="ControlsListBox_SelectionChanged">
+
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock TextWrapping="Wrap" Margin="4">
+                                    <Run Text="{Binding Id}"/>
+                                    <Run Text=" - "/>
+                                    <Run Text="{Binding Title}"/>
+                                </TextBlock>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
+            </Border>
+
+            <!-- Rechte Seite -->
+            <Grid Grid.Column="2" Margin="38,49,38,17">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="220"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="140"/>
+                </Grid.RowDefinitions>
+
+                <!-- Suche -->
+                <Border Grid.Row="0"
+                        BorderBrush="Black"
+                        BorderThickness="1"
+                        Margin="0,0,0,36">
+                    <Grid Cursor="">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="45"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="45"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Icon links -->
+                        <TextBlock Grid.Column="0"
+                                   Text="⌕"
+                                   FontSize="24"
+                                   Foreground="DodgerBlue"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"/>
+
+                        <!-- Suchfeld Mitte -->
+                        <Grid Grid.Column="1">
+                            <TextBox x:Name="SearchBox"
+                                     TextChanged="TextBox_TextChanged"
+                                     KeyDown="SearchBox_KeyDown"
+                                     BorderThickness="0"
+                                     Background="Transparent"
+                                     FontSize="16"
+                                     VerticalContentAlignment="Center"
+                                     HorizontalContentAlignment="Left"
+                                     Padding="8,0,0,0"
+                                     Margin="0"/>
+
+                            <TextBlock x:Name="SearchPlaceholder"
+                                       Text="Suche..."
+                                       FontSize="16"
+                                       Foreground="Gray"
+                                       Padding="10,0,0,0"
+                                       VerticalAlignment="Center"
+                                       IsHitTestVisible="False"/>
+                        </Grid>
+
+                        <!-- ❌ Icon rechts -->
+                        <TextBlock Grid.Column="2"
+                                   Text="✖"
+                                   FontSize="14"
+                                   Foreground="Red"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   Cursor="Hand"
+                                   MouseDown="ClearSearch_Click"/>
+                    </Grid>
+                </Border>
+
+                <!-- Titel -->
+                <Border Grid.Row="1" Margin="20,20,20,10" Background="Transparent">
+                    <TextBlock x:Name="TitleTextBlock"
+                               FontSize="24"
+                               FontWeight="Bold"
+                               TextWrapping="Wrap"
+                               TextAlignment="Center"
+                               HorizontalAlignment="Stretch"
+                               VerticalAlignment="Center" />
+                </Border>
+
+                <!-- Beschreibung Label -->
+                <TextBlock FontSize="20"
+                           FontWeight="SemiBold"
+                           Margin="32,11,3,23" Grid.Row="2" Text="Beschreibung:" VerticalAlignment="Top">
+                    <TextBlock.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform Angle="0.068"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </TextBlock.RenderTransform></TextBlock>
+
+                <!-- Beschreibung Feld -->
+                <Border Grid.Row="2"
+                        BorderBrush="Black"
+                        BorderThickness="1"
+                        Margin="0,54,3,71" RenderTransformOrigin="0.5,0.5" Grid.RowSpan="2">
+                    <Border.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform Angle="0.031"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Border.RenderTransform>
+
+                    <TextBox x:Name="BeschreibungTextBlock"
+                             TextWrapping="Wrap"
+                             IsReadOnly="True"
+                             VerticalScrollBarVisibility="Auto"
+                             Margin="10"
+                             FontSize="18"
+                             BorderThickness="0"
+                             Background="Transparent"/>
+                </Border>
+
+                <!-- Parameterbereich -->
+                <TextBlock Grid.Row="4"
+                           Text="Parameter:"
+                           FontSize="20"
+                           FontWeight="SemiBold"
+                           Margin="32,11,3,23"/>
+
+                <DataGrid x:Name="ParameterGrid"
+                          Grid.Row="5"
+                          Margin="0,0,0,10"
+                          AutoGenerateColumns="False"
+                          IsReadOnly="True">
+
+                    <!-- 👉 Header größer -->
+                    <DataGrid.ColumnHeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="FontSize" Value="16"/>
+                            <Setter Property="FontWeight" Value="Bold"/>
+                            <Setter Property="Background" Value="#E0E0E0"/>
+                            <Setter Property="BorderBrush" Value="#CCCCCC"/>
+                            <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                        </Style>
+                    </DataGrid.ColumnHeaderStyle>
+                    <DataGrid.Columns>
+
+                        <!-- Name links -->
+                        <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="2*">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="FontSize" Value="16"/>
+                                    <Setter Property="VerticalAlignment" Value="Center"/>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+
+                        <!-- Wert zentriert -->
+                        <DataGridTextColumn Header="Wert" Binding="{Binding Wert}" Width="*">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="FontSize" Value="16"/>
+                                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                                    <Setter Property="VerticalAlignment" Value="Center"/>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>
+
